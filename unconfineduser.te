@@ -1,0 +1,137 @@
+    ##policy_module(unconfineduser, 1.0.0)
+
+# copied form userdomain to here to keep android compiler happy for now.
+attribute login_userdomain;
+
+# Added for kernel_unconfined interface. 
+attribute kern_unconfined;
+attribute can_load_kernmodule;
+# for domain domain_unconfined
+attribute userdom_filetrans_type;
+attribute filesystem_unconfined_type;
+
+########################################
+#
+# Declarations
+#
+attribute unconfined_login_domain;
+
+    # For testing
+    ##type unconfined_t;
+
+## <desc>
+## <p>
+## allow unconfined users to transition to the chrome sandbox domains when running chrome-sandbox
+## </p>
+## </desc>
+    ##gen_tunable(unconfined_chrome_sandbox_transition, false)
+
+## <desc>
+## <p>
+## Allow unconfined users to transition to the Mozilla plugin domain when running xulrunner plugin-container.
+## </p>
+## </desc>
+    ##gen_tunable(unconfined_mozilla_plugin_transition, false)
+
+## <desc>
+## <p>
+## Allow a user to login as an unconfined domain
+## </p>
+## </desc>
+    ##gen_tunable(unconfined_login, true)
+
+# usage in this module of types created by these
+# calls is not correct, however we dont currently
+# have another method to add access to these types
+userdom_base_user_template(unconfined)
+    #userdom_manage_home_role(unconfined_r, unconfined_t)
+    #userdom_manage_tmp_role(unconfined_r, unconfined_t)
+    #userdom_unpriv_type(unconfined_t)
+userdom_login_userdomain(unconfined_t)
+    #userdom_home_filetrans_user_home_dir(unconfined_t)
+
+type unconfined_exec_t;
+#application_domain(unconfined_t, unconfined_exec_t)
+
+    # Do we need to define also unconfined role ?
+    #role unconfined_r types unconfined_t;
+    #role_transition system_r unconfined_exec_t unconfined_r;
+    #allow system_r unconfined_r;
+
+role unconfined_r types unconfined_t;
+role_transition r unconfined_exec_t unconfined_r;
+allow r unconfined_r;
+allow unconfined_r r;   
+role r types unconfined_t;
+
+domain_user_exemption_target(unconfined_t)
+    #allow system_r unconfined_r;
+    #allow unconfined_r system_r;   
+    #init_script_role_transition(unconfined_r)
+    #role system_r types unconfined_t;
+typealias unconfined_t alias unconfined_crontab_t;
+
+########################################
+#
+# Local policy
+#
+
+dontaudit unconfined_t self:dir write;
+dontaudit unconfined_t self:file setattr;
+
+allow unconfined_t self:system syslog_read;
+dontaudit unconfined_t self:capability sys_module;
+
+    #allow unconfined_t file_type:system module_load;
+
+    #allow unconfined_t self:cap_userns all_cap_userns_perms;
+
+    #allow unconfined_t self:bpf { map_create map_read map_write prog_load prog_run };
+
+    #kernel_rw_unlabeled_socket(unconfined_t)
+    #kernel_rw_unlabeled_rawip_socket(unconfined_t)
+
+    #files_create_boot_flag(unconfined_t)
+    #files_create_default_dir(unconfined_t)
+    #files_root_filetrans_default(unconfined_t, dir)
+
+init_domtrans_script(unconfined_t)
+init_telinit(unconfined_t)
+
+    #logging_send_syslog_msg(unconfined_t)
+
+    #systemd_config_all_services(unconfined_t)
+
+unconfined_domain_noaudit(unconfined_t)
+domain_named_filetrans(unconfined_t)
+
+# Allow domain transition to all domains will conflight with several domains: toolbox, sgdisk, kernel, init, fsck, domain, blkid
+# neverallow toolbox.te violated by allow unconfined_t toolbox:process { transition };
+    #domain_transition_all(unconfined_t)
+
+    ##usermanage_run_passwd(unconfined_t, unconfined_r)
+
+    #tunable_policy(`deny_execmem',`',`
+    #	allow unconfined_t self:process execmem;
+    #')
+
+    #tunable_policy(`selinuxuser_execstack',`
+    #	allow unconfined_t self:process execstack;
+    #')
+
+    #tunable_policy(`selinuxuser_execmod',`
+    #	userdom_execmod_user_home_files(unconfined_t)
+    #')
+
+    #tunable_policy(`unconfined_login',`
+    #	corecmd_shell_domtrans(unconfined_login_domain,unconfined_t)
+    #	allow unconfined_t unconfined_login_domain:fd use;
+    #	allow unconfined_t unconfined_login_domain:fifo_file rw_file_perms;
+    #	allow unconfined_t unconfined_login_domain:process sigchld;
+    #')
+
+
+
+
+    #gen_user(unconfined_u, user, unconfined_r system_r, s0, s0 - mls_systemhigh, mcs_allcats)
+
