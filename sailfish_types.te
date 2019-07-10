@@ -1,0 +1,26 @@
+## Sailfish types file
+##
+##
+## For typealiases and other types not defined in Android.
+
+typealias kernel alias kernel_t;
+typealias proc alias proc_t; 
+typealias proc_net alias proc_net_t;
+    ##typealias device alias device_t;
+    ##typealias sysfs alias sysfs_t;
+    ##typealias sysfs_cpu_online alias cpu_online_t;
+    ##typealias kmsg_device alias kmsg_device_t;
+
+typealias tmpfs alias tmpfs_t;
+typealias cgroup alias cgroup_t;
+
+typealias usermodehelper alias usermodehelper_t;
+
+##typealias shell_exec alias shell_exec_t;
+
+
+# from Linux filesystem.te. Needed to compile systemd policy 
+attribute filesystem_type;
+
+
+

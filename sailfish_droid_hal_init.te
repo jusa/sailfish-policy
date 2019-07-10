@@ -1,0 +1,23 @@
+## Policy file for droid-hal-init
+##
+## 
+## This is draft version. Will need modification.
+
+type droid-hal-init, domain;
+type droid-hal-init_exec, exec_type, file_type;
+
+init_daemon_domain(droid-hal-init)
+domain_auto_trans(init_t, droid-hal-init_exec, droid-hal-init);
+
+########################################
+#
+# Sailfish rules for droid-hal-init
+#
+# Following rules are here since we don't have domain files for these currently. 
+
+#============= socket_device ==============
+allow socket_device device:filesystem associate;
+
+#============= tad_socket ==============
+allow tad_socket device:filesystem associate;
+

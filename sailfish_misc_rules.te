@@ -1,0 +1,147 @@
+## Miscellaneous rules for Sailfish.
+##
+## Following rules are here since we don't have domain for these currently.
+## Only for development needs. Remove after RND work. 
+
+
+#============= mtp_device ==============
+allow mtp_device device:filesystem associate;
+
+#============= qdsp_device ==============
+allow qdsp_device device:filesystem associate;
+
+#============= usbaccessory_device ==============
+allow usbaccessory_device device:filesystem associate;
+
+#============= ipa_dev ==============
+allow ipa_dev device:filesystem associate;
+
+#============= watchdog_device ==============
+allow watchdog_device device:filesystem associate;
+
+#============= device ==============
+allow device devpts:filesystem associate;
+
+#============= device_latency ==============
+allow device_latency device:filesystem associate;
+
+#============= subsys_modem_device ==============
+allow subsys_modem_device device:filesystem associate;
+
+#============= video_device ==============
+allow video_device device:filesystem associate;
+
+#============= audio_device ==============
+allow audio_device device:filesystem associate;
+
+#============= qtaguid_device ==============
+allow qtaguid_device device:filesystem associate;
+
+#============= ramdump_device ==============
+allow ramdump_device device:filesystem associate;
+
+#============= sensors_device ==============
+allow sensors_device device:filesystem associate;
+
+#============= ashmem_device ==============
+allow ashmem_device device:filesystem associate;
+
+#============= avtimer_device ==============
+allow avtimer_device device:filesystem associate;
+
+#============= binder_device ==============
+allow binder_device device:filesystem associate;
+
+#============= uhid_device ==============
+allow uhid_device device:filesystem associate;
+
+#============= fm_radio_device ==============
+allow fm_radio_device device:filesystem associate;
+
+#============= hci_attach_dev ==============
+allow hci_attach_dev device:filesystem associate;
+
+#============= input_device ==============
+allow input_device device:filesystem associate;
+
+#============= rtc_device ==============
+allow rtc_device device:filesystem associate;
+
+#============= ppp_device ==============
+allow ppp_device device:filesystem associate;
+
+#============= qce_device ==============
+allow qce_device device:filesystem associate;
+
+#============= rmnet_device ==============
+allow rmnet_device device:filesystem associate;
+
+#============= uio_device ==============
+allow uio_device device:filesystem associate;
+
+#============= gpu_device ==============
+allow gpu_device device:filesystem associate;
+
+#============= nfc_device ==============
+allow nfc_device device:filesystem associate;
+
+#============= smd_device ==============
+allow smd_device device:filesystem associate;
+
+#============= tee_device ==============
+allow tee_device device:filesystem associate;
+
+#============= console_device ==============
+allow console_device device:filesystem associate;
+
+#============= diag_device ==============
+allow diag_device device:filesystem associate;
+
+#============= ptmx_device ==============
+allow ptmx_device device:filesystem associate;
+
+#============= rng_device ==============
+allow rng_device device:filesystem associate;
+
+#============= fuse_device ==============
+allow fuse_device device:filesystem associate;
+
+#============= tty_device ==============
+allow tty_device device:filesystem associate;
+
+#============= vcs_device ==============
+allow vcs_device device:filesystem associate;
+
+#============= voice_device ==============
+allow voice_device device:filesystem associate;
+
+#============= kmsg_device ==============
+allow kmsg_device device:filesystem associate;
+
+#============= owntty_device ==============
+allow owntty_device device:filesystem associate;
+
+#============= urandom_device ==============
+allow urandom_device device:filesystem associate;
+
+#============= full_device ==============
+allow full_device device:filesystem associate;
+
+#============= null_device ==============
+allow null_device device:filesystem associate;
+
+#============= random_device ==============
+allow random_device device:filesystem associate;
+
+#============= zero_device ==============
+allow zero_device device:filesystem associate;
+
+#============= ion_device ==============
+allow ion_device device:filesystem associate;
+
+#============= pmsg_device ==============
+allow pmsg_device device:filesystem associate;
+
+#============= thermal_device ==============
+allow thermal_device device:filesystem associate;
+

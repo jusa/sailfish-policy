@@ -1,0 +1,186 @@
+
+###################################
+# Sailfish droid-hal-init
+#
+
+/sbin/droid-hal-init                                       u:object_r:droid-hal-init_exec:s0
+
+
+###################################
+# Sailfish MCE
+#
+/etc/mce(/.*)?                                             u:object_r:mce_file:s0
+/var/lib/mce(/.*)?                                         u:object_r:mce_conf_file:s0
+/usr/lib/mce/modules(/.*)?                                 u:object_r:mce_module:s0
+/usr/sbin/mce                                              u:object_r:mce_exec:s0
+
+
+###################################
+# Sailfish Systemd
+#
+
+/sbin/init(ng)?	                                           u:object_r:init_exec_t:s0
+/usr/sbin/init(ng)?                                        u:object_r:init_exec_t:s0
+
+/lib/systemd/systemd			                           u:object_r:init_exec_t:s0
+
+/lib/systemd/systemd-ac-power                              u:object_r:systemd_ac_power_exec_t:s0
+/lib/systemd/systemd-activate                              u:object_r:systemd_activate_exec_t:s0
+/lib/systemd/systemd-binfmt                                u:object_r:systemd_binfmt_exec_t:s0
+/lib/systemd/systemd-bootchart                             u:object_r:systemd_bootchart_exec_t:s0
+/lib/systemd/systemd-bus-proxyd                            u:object_r:systemd_bus_proxyd_exec_t:s0
+/lib/systemd/systemd-cgroups-agent                         u:object_r:systemd_binfmt_exec_t:s0      
+/lib/systemd/systemd-fsck                                  u:object_r:systemd_binfmt_exec_t:s0
+/lib/systemd/systemd-hostnamed	                           u:object_r:systemd_hostnamed_exec_t:s0
+/lib/systemd/systemd-initctl                               u:object_r:systemd_initctl_exec_t:s0
+/lib/systemd/systemd-journald                              u:object_r:systemd_journald_exec_t:s0
+/lib/systemd/systemd-logind		                           u:object_r:systemd_logind_exec_t:s0
+/lib/systemd/systemd-machine-id-commit                     u:object_r:systemd_machine_id_commit_exec_t:s0
+/lib/systemd/systemd-modules-load	                       u:object_r:systemd_modules_load_exec_t:s0
+/lib/systemd/systemd-random-seed                           u:object_r:systemd_random_seed_exec_t:s0
+/lib/systemd/systemd-remount-fs                            u:object_r:systemd_remount_fs_exec_t:s0
+/lib/systemd/systemd-reply-password                        u:object_r:systemd_reply_password_exec_t:s0
+/lib/systemd/systemd-shutdown                              u:object_r:systemd_shutdown_exec_t:s0
+/lib/systemd/systemd-sleep                                 u:object_r:systemd_sleep_exec_t:s0
+/lib/systemd/systemd-socket-proxyd                         u:object_r:systemd_socket_proxyd_exec_t:s0
+/lib/systemd/systemd-sysctl		                           u:object_r:systemd_sysctl_exec_t:s0
+/lib/systemd/systemd-udevd                                 u:object_r:systemd_udevd_exec_t:s0
+/lib/systemd/systemd-update-done                           u:object_r:systemd_update_done_exec_t:s0
+/lib/systemd/systemd-update-utmp                           u:object_r:systemd_update_utmp_exec_t:s0
+/lib/systemd/systemd-user-sessions                         u:object_r:systemd_user_sessions_exec_t:s0
+/lib/systemd/systemd-vconsole-setup                        u:object_r:systemd_vconsole_setup_exec_t:s0
+/lib/systemd/systemd-machined	                           u:object_r:systemd_machined_exec_t:s0
+/lib/systemd/systemd-rfkill                                u:object_r:systemd_rfkill_exec_t:s0
+/lib/systemd/systemd-timedated	                           u:object_r:systemd_timedated_exec_t:s0
+/lib/systemd/systemd-timesyncd	                           u:object_r:systemd_timedated_exec_t:s0
+/lib/systemd/systemd-user-runtime-dir		               u:object_r:systemd_logind_exec_t:s0
+/lib/systemd/systemd-localed	                           u:object_r:systemd_localed_exec_t:s0
+/lib/systemd/systemd-logger	                               u:object_r:systemd_logger_exec_t:s0
+/lib/systemd/systemd-networkd                              u:object_r:systemd_networkd_exec_t:s0
+/lib/systemd/systemd-tmpfiles                              u:object_r:systemd_tmpfiles_exec_t:s0
+/lib/systemd/systemd-coredump	                           u:object_r:systemd_coredump_exec_t:s0
+/lib/systemd/system-generators/systemd-gpt-auto-generator  u:object_r:systemd_gpt_generator_exec_t:s0
+/lib/systemd/systemd-resolve(d|-host)			           u:object_r:systemd_resolved_exec_t:s0
+/lib/systemd/systemd-importd		                       u:object_r:systemd_importd_exec_t:s0
+
+
+HOME_DIR/\.local/share/systemd(/.*)?		               u:object_r:systemd_home_t:s0
+HOME_DIR/\.config/systemd/user(/.*)?		               u:object_r:systemd_unit_file_t:s0
+/root/\.local/share/systemd(/.*)?		                   u:object_r:systemd_home_t:s0
+
+/etc/.*hostname.*			                               u:object_r:hostname_etc_t:s0
+/etc/machine-info		                                   u:object_r:hostname_etc_t:s0
+/etc/udev/.*hwdb.*	                                       u:object_r:systemd_hwdb_etc_t:s0
+
+/bin/systemd-notify				                           u:object_r:systemd_notify_exec_t:s0
+/bin/systemctl					                           u:object_r:systemd_systemctl_exec_t:s0
+/bin/systemd-tty-ask-password-agent		                   u:object_r:systemd_passwd_agent_exec_t:s0
+/bin/systemd-tmpfiles				                       u:object_r:systemd_tmpfiles_exec_t:s0
+/bin/systemd-coredump		                               u:object_r:systemd_coredump_exec_t:s0
+
+/usr/bin/systemctl				                           u:object_r:systemd_systemctl_exec_t:s0
+/usr/bin/systemd-gnome-ask-password-agent	               u:object_r:systemd_passwd_agent_exec_t:s0
+/usr/bin/systemd-notify				                       u:object_r:systemd_notify_exec_t:s0
+/usr/bin/systemd-tmpfiles		                           u:object_r:systemd_tmpfiles_exec_t:s0
+/usr/bin/systemd-tty-ask-password-agent		               u:object_r:systemd_passwd_agent_exec_t:s0
+/usr/bin/systemd-hwdb		                               u:object_r:systemd_hwdb_exec_t:s0
+
+/usr/lib/systemd/systemd-bootchart	                       u:object_r:systemd_bootchart_exec_t:s0
+
+/usr/lib/systemd/systemd-initctl	                       u:object_r:systemd_initctl_exec_t:s0
+
+/etc/systemd/system\.control(/.*)?		                   u:object_r:systemd_unit_file_t:s0
+/usr/lib/dracut/modules.d/.*\.service	                   u:object_r:systemd_unit_file_t:s0
+/usr/lib/systemd/system(/.*)?		                       u:object_r:systemd_unit_file_t:s0
+/usr/lib/systemd/user(/.*)?		                           u:object_r:systemd_unit_file_t:s0
+/run/systemd/transient(/.*)?		                       u:object_r:systemd_unit_file_t:s0
+/run/systemd/units(/.*)?		                           u:object_r:systemd_unit_file_t:s0
+
+/usr/lib/systemd/system/systemd-machined\.service	           u:object_r:systemd_machined_unit_file_t:s0
+/usr/lib/systemd/system/systemd-networkd\.service              u:object_r:systemd_networkd_unit_file_t:s0
+/usr/lib/systemd/system/systemd-resolved\.service              u:object_r:systemd_resolved_unit_file_t:s0
+/usr/lib/systemd/system/systemd-modules-load\.service          u:object_r:systemd_modules_load_unit_file_t:s0
+/usr/lib/systemd/system/systemd-vconsole-setup\.service		   u:object_r:systemd_vconsole_unit_file_t:s0
+/usr/lib/systemd/system/systemd-rfkill\.service	               u:object_r:systemd_rfkill_unit_file_t:s0
+/usr/lib/systemd/system/systemd-time.*\.service	               u:object_r:systemd_timedated_unit_file_t:s0
+/usr/lib/systemd/system/systemd-hwdb.*\.service	               u:object_r:systemd_hwdb_unit_file_t:s0
+/usr/lib/systemd/system/systemd-bootchart.*\.service           u:object_r:systemd_bootchart_unit_file_t:s0
+
+/usr/lib/systemd/system/.*halt.(service|target)	               u:object_r:power_unit_file_t:s0
+/usr/lib/systemd/system/.*hibernate.*\.(service|target)		   u:object_r:power_unit_file_t:s0
+/usr/lib/systemd/system/.*power.*\.(service|target)		       u:object_r:power_unit_file_t:s0
+/usr/lib/systemd/system/.*reboot.*\.(service|target)		   u:object_r:power_unit_file_t:s0
+/usr/lib/systemd/system/.*sleep.*\.(service|target)		       u:object_r:power_unit_file_t:s0
+/usr/lib/systemd/system/.*shutdown.*\.(service|target)		   u:object_r:power_unit_file_t:s0
+/usr/lib/systemd/system/.*suspend.*\.(service|target)		   u:object_r:power_unit_file_t:s0
+/usr/lib/systemd/systemd-hostnamed	                           u:object_r:systemd_hostnamed_exec_t:s0
+/usr/lib/systemd/systemd-machined	                           u:object_r:systemd_machined_exec_t:s0
+/usr/lib/systemd/systemd-rfkill                                u:object_r:systemd_rfkill_exec_t:s0
+/usr/lib/systemd/systemd-sysctl		                           u:object_r:systemd_sysctl_exec_t:s0
+/usr/lib/systemd/systemd-timedated	                           u:object_r:systemd_timedated_exec_t:s0
+/usr/lib/systemd/systemd-timesyncd	                           u:object_r:systemd_timedated_exec_t:s0
+/usr/lib/systemd/systemd-logind		                           u:object_r:systemd_logind_exec_t:s0
+/usr/lib/systemd/systemd-user-runtime-dir		               u:object_r:systemd_logind_exec_t:s0
+/usr/lib/systemd/systemd-localed	                           u:object_r:systemd_localed_exec_t:s0
+/usr/lib/systemd/systemd-logger	                               u:object_r:systemd_logger_exec_t:s0
+/usr/lib/systemd/systemd-networkd                              u:object_r:systemd_networkd_exec_t:s0
+/usr/lib/systemd/systemd-tmpfiles                              u:object_r:systemd_tmpfiles_exec_t:s0
+/usr/lib/systemd/systemd-coredump	                           u:object_r:systemd_coredump_exec_t:s0
+/usr/lib/systemd/systemd-modules-load	                       u:object_r:systemd_modules_load_exec_t:s0
+/usr/lib/systemd/system-generators/systemd-gpt-auto-generator  u:object_r:systemd_gpt_generator_exec_t:s0
+/usr/lib/systemd/systemd-resolve(d|-host)			           u:object_r:systemd_resolved_exec_t:s0
+/usr/lib/systemd/systemd-importd		                       u:object_r:systemd_importd_exec_t:s0
+
+/var/lib/machines(/.*)?			                               u:object_r:systemd_machined_var_lib_t:s0
+/var/lib/systemd/rfkill(/.*)?                                  u:object_r:systemd_rfkill_var_lib_t:s0
+
+##/var/lib/systemd/linger(/.*)?  		                           u:object_r:systemd_logind_var_lib_t:mls_systemhigh
+/var/lib/systemd/linger(/.*)?  		                           u:object_r:systemd_logind_var_lib_t:s0
+/var/lib/systemd/timesync(/.*)? 		                       u:object_r:systemd_timedated_var_lib_t:s0
+/var/lib/private/systemd/timesync(/.*)?		                   u:object_r:systemd_timedated_var_lib_t:s0
+##/var/lib/random-seed 		                                       u:object_r:random_seed_t:mls_systemhigh
+/var/lib/random-seed 		                                   u:object_r:random_seed_t:s0
+/usr/lib/systemd/resolv.*                                      u:object_r:lib_t:s0
+##/usr/var/lib/random-seed 	                                        u:object_r:random_seed_t:mls_systemhigh
+/usr/var/lib/random-seed 	                                   u:object_r:random_seed_t:s0
+
+/var/run/.*nologin.*		                                   u:object_r:systemd_logind_var_run_t:s0
+/var/run/systemd/seats(/.*)?	                               u:object_r:systemd_logind_var_run_t:s0
+/var/run/systemd/sessions(/.*)?	                               u:object_r:systemd_logind_sessions_t:s0
+/var/run/systemd/shutdown(/.*)?	                               u:object_r:systemd_logind_var_run_t:s0
+/var/run/systemd/users(/.*)?	                               u:object_r:systemd_logind_var_run_t:s0
+/var/run/systemd/inhibit(/.*)?	                               u:object_r:systemd_logind_inhibit_var_run_t:s0
+/var/run/systemd/ask-password-block(/.*)?	                   u:object_r:systemd_passwd_var_run_t:s0
+/var/run/systemd/ask-password(/.*)?	                           u:object_r:systemd_passwd_var_run_t:s0
+/var/run/systemd/machines(/.*)?	                               u:object_r:systemd_machined_var_run_t:s0
+/var/run/systemd/resolve(/.*)?	                               u:object_r:systemd_resolved_var_run_t:s0
+/var/run/systemd/netif(/.*)?	                               u:object_r:systemd_networkd_var_run_t:s0
+/var/run/systemd/import(/.*)?		                           u:object_r:systemd_importd_var_run_t:s0
+
+/var/run/log/bootchart.*	                                   u:object_r:systemd_bootchart_var_run_t:s0
+
+/var/run/systemd/units(/.*)?		                           u:object_r:systemd_unit_file_t:s0
+
+/var/run/initramfs(/.*)?	<<none>>
+
+/run/systemd/resolve(/.*)?	                                   u:object_r:systemd_resolved_var_run_t:s0
+
+
+###################################
+# For testing init  
+# Remove after RnD is done or add to other place.
+
+/bin/dbus-daemon                                               u:object_r:dbus-daemon_exec:s0
+/usr/sbin/ohmd                                                 u:object_r:ohmd_exec:s0
+/usr/sbin/usb_moded                                            u:object_r:usb_moded_exec:s0
+/usr/bin/statefs                                               u:object_r:statefs_exec:s0
+/usr/sbin/auditd                                               u:object_r:auditd_exec:s0
+/usr/sbin/dsme                                                 u:object_r:dsme_exec:s0
+/usr/sbin/dsme-server                                          u:object_r:dsme-server_exec:s0
+/usr/sbin/bluetooth_rfkill_event                               u:object_r:bluetooth_rfkill_event_exec:s0
+/usr/sbin/ofonod                                               u:object_r:ofonod_exec:s0
+/usr/sbin/sensorfwd                                            u:object_r:sensorfwd_exec:s0
+
+
+
+

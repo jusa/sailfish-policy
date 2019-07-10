@@ -1,0 +1,305 @@
+## Policy file for Sailfish kernel rules.
+## 
+## Note that these rule need to be updated when Sailfish SELinux is mature, 
+## e.g. has all needed domains in place. There is a lot of rules which are
+## not really kernel rules, but has fall to kernel since process don't have 
+## own domain.
+
+
+#============================== kernel ========================================
+allow kernel init_t:dir search;
+allow kernel init_t:file { getattr open read };
+allow kernel systemd_journald_t:unix_dgram_socket sendto;
+allow kernel tmpfs:sock_file write;
+
+ 
+#=============================== mce ==========================================
+allow kernel self:capability2 block_suspend;
+allow kernel sysfs:file { append write };
+allow kernel device:chr_file ioctl;
+
+allow kernel mce:dir search;
+allow kernel mce:file { getattr open read };
+allow kernel mce:lnk_file read;
+allow kernel mce_exec:file { execute open read };
+
+allow kernel mce_file:dir { getattr open read };
+allow kernel mce_file:file { getattr open read };
+allow kernel mce_module:dir { getattr open read };
+allow kernel mce_module:file { getattr execute open read };
+
+allow kernel mce_conf_file:dir { add_name remove_name write };
+allow kernel mce_conf_file:file { getattr create link open read rename setattr unlink write };
+
+
+#============================== systemd =======================================
+# conflights with neverallow on line 282 of external/sepolicy/domain.te 
+allow kernel device:chr_file { write relabelfrom relabelto };
+allow kernel device:dir { mounton relabelfrom relabelto add_name write open read };
+allow kernel device:blk_file { getattr relabelfrom relabelto };
+allow kernel device:lnk_file { relabelfrom relabelto write create };
+allow kernel device:file { getattr relabelfrom };
+
+# dyntransition conflights with neverallow on line 65 of kernel.te 
+# This is fixed by allowing dyntransition for kernel in kernel.te
+allow kernel self:process { dyntransition setcurrent setfscreate };
+allow kernel self:capability { net_bind_service sys_time };
+allow kernel self:tcp_socket create;
+allow kernel self:security compute_create;
+allow kernel self:capability sys_tty_config;
+allow kernel self:netlink_route_socket create;
+
+allow kernel input_device:dir remove_name;
+allow kernel input_device:lnk_file { rename unlink };
+
+allow kernel systemd_unit_file_t:file { getattr open read };
+allow kernel systemd_unit_file_t:lnk_file read;
+allow kernel systemd_unit_file_t:lnk_file getattr;
+
+allow kernel unlabeled:dir { rmdir getattr mounton };
+allow kernel unlabeled:file { getattr open read lock };
+allow kernel unlabeled:lnk_file read;
+allow kernel unlabeled:dir { open read };
+allow kernel unlabeled:file write;
+# ERROR permission remove_name is not defined for class file
+allow kernel unlabeled:dir remove_name;
+
+allow kernel tmpfs:sock_file read;
+allow kernel tmpfs:filesystem mount;
+allow kernel tmpfs:dir { add_name mounton write relabelfrom };
+allow kernel tmpfs:lnk_file unlink;
+allow kernel tmpfs:lnk_file create;
+allow kernel tmpfs:fifo_file unlink;
+allow kernel tmpfs:filesystem remount;
+
+allow kernel devpts:dir relabelfrom;
+allow kernel devpts:filesystem mount;
+
+allow kernel audio_device:dir create;
+allow kernel audio_device:lnk_file { create };
+allow kernel audio_device:chr_file relabelto;
+allow kernel audio_device:dir { read relabelto };
+
+allow kernel console_device:chr_file relabelto;
+allow kernel console_device:chr_file write;
+
+allow kernel sysfs:dir mounton;
+allow kernel cgroup:filesystem mount;
+allow kernel pstorefs:filesystem mount;
+allow kernel ipa_dev:chr_file relabelto;
+allow kernel watchdog_device:file relabelto;
+allow kernel mtp_device:chr_file relabelto;
+allow kernel qdsp_device:chr_file relabelto;
+allow kernel ramdump_device:chr_file relabelto;
+allow kernel usbaccessory_device:chr_file relabelto;
+allow kernel node:tcp_socket node_bind;
+allow kernel port:tcp_socket name_bind;
+allow kernel vfat:file { getattr open };
+allow kernel device_latency:chr_file relabelto;
+allow kernel qtaguid_device:chr_file relabelto;
+allow kernel subsys_modem_device:chr_file relabelto;
+allow kernel video_device:chr_file relabelto;
+allow kernel sensors_device:chr_file relabelto;
+allow kernel ashmem_device:chr_file relabelto;
+allow kernel avtimer_device:chr_file relabelto;
+allow kernel binder_device:chr_file relabelto;
+allow kernel uhid_device:chr_file relabelto;
+allow kernel fm_radio_device:chr_file relabelto;
+allow kernel hci_attach_dev:chr_file relabelto;
+allow kernel input_device:chr_file relabelto;
+allow kernel ram_device:lnk_file { relabelfrom relabelto write };
+allow kernel rtc_device:chr_file relabelto;
+allow kernel ppp_device:chr_file relabelto;
+allow kernel qce_device:chr_file relabelto;
+allow kernel rmnet_device:chr_file relabelto;
+allow kernel uio_device:chr_file relabelto;
+allow kernel gpu_device:chr_file relabelto;
+allow kernel nfc_device:chr_file relabelto;
+allow kernel smd_device:chr_file relabelto;
+allow kernel tee_device:chr_file relabelto;
+allow kernel diag_device:chr_file relabelto;
+allow kernel ptmx_device:chr_file relabelto;
+allow kernel rng_device:chr_file relabelto;
+allow kernel fuse_device:chr_file relabelto;
+allow kernel tty_device:chr_file relabelto;
+allow kernel vcs_device:chr_file relabelto;
+allow kernel voice_device:chr_file relabelto;
+allow kernel kmsg_device:chr_file { relabelto write };
+allow kernel owntty_device:chr_file relabelto;
+allow kernel random_device:chr_file relabelto;
+allow kernel urandom_device:chr_file relabelto;
+allow kernel full_device:chr_file relabelto;
+allow kernel ion_device:chr_file relabelto;
+allow kernel null_device:chr_file relabelto;
+allow kernel zero_device:chr_file relabelto;
+allow kernel pmsg_device:chr_file relabelto;
+allow kernel thermal_device:chr_file relabelto;
+
+allow kernel rootfs:dir mounton;
+allow kernel console_device:chr_file { ioctl open };
+allow kernel hostname_etc_t:file { open read };
+allow kernel kmsg_device:chr_file open;
+allow kernel hostname_etc_t:file getattr;
+allow kernel tty_device:chr_file { ioctl open read write };
+
+allow kernel self:capability kill;
+allow kernel tmpfs:dir { remove_name rmdir };
+allow kernel tmpfs:file write;
+
+allow kernel cgroup:dir add_name;
+allow kernel self:netlink_kobject_uevent_socket create;
+allow kernel self:process setsockcreate;
+allow kernel systemd_unit_file_t:dir { getattr open read };
+allow kernel tmpfs:sock_file create;
+
+
+#=========================== systemd-udevd ===================================
+allow kernel root_block_device:lnk_file relabelfrom;
+allow kernel loop_device:lnk_file { relabelfrom relabelto write };
+allow kernel rpmb_device:lnk_file { relabelfrom relabelto write };
+allow kernel swap_block_device:lnk_file { relabelfrom relabelto write };
+
+
+#=========================== systemd (user) ===================================
+allow kernel sysfs:dir write;
+# Added kernel to neverallow on line 317 of external/sepolicy/domain.te
+allow kernel unlabeled:file { execute ioctl };
+
+# violated neverallow on line 83 of external/sepolicy/kernel.te 
+#allow kernel unlabeled:file execute_no_trans;
+
+
+#=========================== droid-hal-init ===================================
+allow kernel adb_data_file:dir setattr;
+allow kernel adb_keys_file:dir setattr;
+
+allow kernel apk_data_file:dir setattr;
+allow kernel apk_private_data_file:dir setattr;
+
+allow kernel self:capability { fsetid sys_rawio };
+allow kernel self:netlink_selinux_socket create;
+allow kernel self:security compute_av;
+allow kernel self:process setexec;
+
+allow kernel asec_image_file:dir setattr;
+allow kernel audio_data_file:dir setattr;
+allow kernel backup_data_file:dir setattr;
+allow kernel block_device:dir setattr;
+allow kernel bluetooth_data_file:dir setattr;
+allow kernel bootchart_data_file:dir setattr;
+allow kernel cache_file:dir setattr;
+allow kernel camera_data_file:dir setattr;
+allow kernel console_device:chr_file read;
+allow kernel dalvikcache_profiles_data_file:dir setattr;
+allow kernel data_qsee_file:dir setattr;
+
+allow kernel device:file unlink;
+allow kernel device:sock_file { create setattr };
+
+allow kernel dhcp_data_file:dir setattr;
+allow kernel drm_data_file:dir setattr;
+allow kernel dts_data_file:dir setattr;
+allow kernel fm_data_file:dir setattr;
+allow kernel gatekeeper_data_file:dir setattr;
+allow kernel heapdump_data_file:dir setattr;
+allow kernel keychain_data_file:dir setattr;
+allow kernel media_data_file:dir setattr;
+allow kernel media_rw_data_file:dir setattr;
+allow kernel misc_user_data_file:dir setattr;
+allow kernel net_data_file:dir setattr;
+allow kernel nfc_data_file:dir setattr;
+allow kernel perfprofd_data_file:dir setattr;
+allow kernel persist_file:dir setattr;
+allow kernel proc:file setattr;
+allow kernel proc_net:file setattr;
+allow kernel proc_sysrq:file setattr;
+allow kernel pstorefs:dir search;
+allow kernel pstorefs:file setattr;
+allow kernel qtaguid_device:chr_file setattr;
+allow kernel qtaguid_proc:file setattr;
+allow kernel radio_data_file:dir setattr;
+allow kernel resourcecache_data_file:dir setattr;
+
+allow kernel selinuxfs:file setattr;
+allow kernel sensors_data_file:dir setattr;
+allow kernel shared_relro_file:dir setattr;
+allow kernel shell_data_file:dir setattr;
+allow kernel socket_device:dir { create setattr };
+allow kernel storage_file:dir setattr;
+allow kernel sysfs:file setattr;
+allow kernel system_data_file:dir { setattr write };
+allow kernel systemkeys_data_file:dir setattr;
+allow kernel tombstone_data_file:dir setattr;
+allow kernel vpn_data_file:dir setattr;
+allow kernel wifi_data_file:dir setattr;
+allow kernel wpa_socket:dir setattr;
+allow kernel zoneinfo_data_file:dir setattr;
+
+allow kernel mlog_qmi_exec:file getattr;
+allow kernel per_mgr_exec:file getattr;
+
+allow kernel rmt_storage_exec:file getattr;
+allow kernel sct_exec:file getattr;
+allow kernel servicemanager_exec:file getattr;
+allow kernel ta_qmi_exec:file getattr;
+allow kernel tad_exec:file getattr;
+allow kernel sct_exec:file { execute open read };
+
+allow kernel servicemanager_exec:file { execute open read };
+allow kernel ta_qmi_exec:file { execute open read };
+allow kernel tad:unix_stream_socket { bind create };
+allow kernel tad_exec:file execute;
+allow kernel tad_socket:sock_file { create setattr };
+allow kernel tee_exec:file getattr;
+allow kernel device:lnk_file write;
+allow kernel per_mgr_exec:file { execute open read };
+allow kernel property_data_file:dir { add_name open read write remove_name setattr };
+allow kernel property_data_file:file { create getattr open read write rename unlink };
+
+allow kernel adsprpcd_exec:file getattr;
+allow kernel debuggerd_exec:file getattr;
+allow kernel drmserver_exec:file getattr;
+allow kernel installd_exec:file getattr;
+allow kernel irsc_util_exec:file getattr;
+
+allow kernel mlog_qmi_exec:file { execute open read };
+allow kernel rild_exec:file getattr;
+allow kernel sensors_exec:file getattr;
+allow kernel tad:process transition;
+allow kernel tad_exec:file { open read };
+allow kernel rmt_storage_exec:file { execute open read };
+
+allow kernel tzdatacheck_exec:file { execute getattr open read };
+allow kernel vold_exec:file { execute getattr open read };
+allow kernel logd_exec:file { execute getattr open read };
+
+# kernel added to neverallow on line 330 of external/sepolicy/domain.te
+allow kernel dalvikcache_data_file:dir setattr;
+
+allow kernel system_file:dir setattr;
+
+# kernel added to neverallow on line 168 of external/sepolicy/vold.te 
+allow kernel vold_data_file:dir setattr;
+
+# kernel added to neverallow on line 246 of external/sepolicy/domain.te
+allow kernel security_file:dir setattr;
+
+# kernel added to neverallow on line 29 of external/sepolicy/keystore.te
+allow kernel keystore_data_file:dir setattr;
+
+# Defined in systemd part of rules.
+#allow kernel property_data_file:dir { add_name open read remove_name setattr write };
+#allow kernel property_data_file:file { create getattr open read write rename unlink };
+
+# neverallow on line 83 kernel.te violated by allow kernel execute_no_trans
+#allow kernel sct_exec:file execute_no_trans;
+#allow kernel ta_qmi_exec:file execute_no_trans;
+#allow kernel servicemanager_exec:file execute_no_trans;
+#allow kernel rmt_storage_exec:file execute_no_trans;
+#allow kernel tee_exec:file { execute execute_no_trans open read };
+#allow kernel per_mgr_exec:file execute_no_trans;
+#allow kernel mlog_qmi_exec:file execute_no_trans;
+#allow kernel tzdatacheck_exec:file execute_no_trans;
+#allow kernel vold_exec:file execute_no_trans;
+#allow kernel logd_exec:file execute_no_trans;
+

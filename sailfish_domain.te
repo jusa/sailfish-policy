@@ -1,0 +1,60 @@
+## This is a test policy file for Sailfish init/systemd, containing several 
+## domains for different processes. 
+## 
+## This is just for testing domain transition from init_t domain to process 
+## own domain.
+## 
+## NOTE ! REMOVE THIS FILE AFTER SELINUX RND WORK IS DONE !
+
+type ohmd, domain;
+type ohmd_exec, exec_type, file_type;
+init_daemon_domain(ohmd)
+domain_auto_trans(init_t, ohmd_exec, ohmd);
+
+type usb_moded, domain;
+type usb_moded_exec, exec_type, file_type;
+init_daemon_domain(usb_moded)
+domain_auto_trans(init_t, usb_moded_exec, usb_moded);
+
+type dbus-daemon, domain;
+type dbus-daemon_exec, exec_type, file_type;
+init_daemon_domain(dbus-daemon)
+domain_auto_trans(init_t, dbus-daemon_exec, dbus-daemon);
+
+type statefs, domain;
+type statefs_exec, exec_type, file_type;
+init_daemon_domain(statefs)
+domain_auto_trans(init_t, statefs_exec, statefs);
+
+type auditd, domain;
+type auditd_exec, exec_type, file_type;
+init_daemon_domain(auditd)
+domain_auto_trans(init_t, auditd_exec, auditd);
+
+type dsme, domain;
+type dsme_exec, exec_type, file_type;
+init_daemon_domain(dsme)
+domain_auto_trans(init_t, dsme_exec, dsme);
+
+type dsme-server, domain;
+type dsme-server_exec, exec_type, file_type;
+init_daemon_domain(dsme-server)
+domain_auto_trans(init_t, dsme-server_exec, dsme-server);
+
+type bluetooth_rfkill_event, domain;
+type bluetooth_rfkill_event_exec, exec_type, file_type;
+init_daemon_domain(bluetooth_rfkill_event)
+domain_auto_trans(init_t, bluetooth_rfkill_event_exec, bluetooth_rfkill_event);
+
+type ofonod, domain;
+type ofonod_exec, exec_type, file_type;
+init_daemon_domain(ofonod)
+domain_auto_trans(init_t, ofonod_exec, ofonod);
+
+type sensorfwd, domain;
+type sensorfwd_exec, exec_type, file_type;
+init_daemon_domain(sensorfwd)
+domain_auto_trans(init_t, sensorfwd_exec, sensorfwd);
+
+
+

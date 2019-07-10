@@ -1,0 +1,52 @@
+## Policy file for MCE
+##
+## 
+## Draft version. Will need modification.
+
+type mce, domain;
+type mce_exec, exec_type, file_type;
+
+init_daemon_domain(mce)
+#domain_auto_trans(kernel, mce_exec, mce);
+domain_auto_trans(init_t, mce_exec, mce);
+
+# When mce is started with systemctl it requires execute_no_trans for 
+# /usr/sbin/mce. This is why we have domain_auto_trans for mce.
+
+type mce_file, file_type;
+type mce_conf_file;
+type mce_module;
+
+#============= mce_conf_file ==============
+allow mce_conf_file labeledfs:filesystem associate;
+
+#============= mce ==============
+allow mce device:dir { open read };
+allow mce device:chr_file { getattr ioctl open read write };
+
+allow mce kernel:unix_dgram_socket sendto;
+allow mce kernel:unix_stream_socket { read write };
+allow mce kernel:dir { getattr search };
+allow mce kernel:file { open read };
+allow mce kernel:unix_stream_socket connectto;
+
+# We could also use mce file_type:dir, mce file_type:file, but in android
+# it conflights with some neverallow rules. We could add -mce to those.
+# But first we need to resolve is this correct attribute for mce_file.
+ 
+allow mce mce_file:dir { getattr open read };
+allow mce mce_file:file { getattr open read };
+allow mce mce_conf_file:dir { add_name remove_name write };
+allow mce mce_conf_file:file { getattr create open link rename setattr unlink write read };
+allow mce mce_module:file { execute getattr open read };
+
+allow mce self:capability sys_nice;
+allow mce self:capability dac_override;
+allow mce self:capability2 block_suspend;
+allow mce self:netlink_kobject_uevent_socket { bind create getattr setopt read };
+
+allow mce sysfs:file { append write };
+allow mce sysfs_wake_lock:file { open write };
+allow mce tmpfs:sock_file write;
+allow mce tmpfs:file open;
+
